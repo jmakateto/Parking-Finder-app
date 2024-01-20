@@ -15,8 +15,10 @@ import LoginIcon  from '@mui/icons-material/Login';
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration"
 import AdminPanelIcon from "@mui/icons-material/AdminPanelSettings"
 
-function HomeNavbar() {
+import { Link } from 'react-router-dom';
 
+
+const Navbar = () => {
     const [openMenu, setOpenMenu] = useState(false)
     const menuOptions =[
         {
@@ -44,19 +46,33 @@ function HomeNavbar() {
             icon: <AdminPanelIcon/>
         },
     ]
+
   return (
     <nav>
         <div className='nav-logo-container'>
             <img src={logo} alt=''/>
         </div>
         <div className='navbar-links-container'>
-            <a href=''>Home</a>
-            <a href=''>How it works</a>
-            <a href=''>Reviews</a>
-            <a href=''>Login</a>
-            <a href=''>Sign -Up</a>
-            <a href=''>Admin Panel</a>
-            {/* <button className='primary-button'>Search Location</button> */}
+            <ul>
+                <li>
+                    <Link to='/'>Home</Link>
+                </li>
+                <li>
+                <Link to='/how-it-works'>How it works</Link>
+                </li>
+                <li>
+                    <Link to='/reviews'>Reviews</Link>
+                </li>
+                <li>
+                    <Link to='/login'>Login</Link>
+                </li>
+                <li>
+                    <Link to='/sign-up'>Sign-Up</Link>
+                </li>
+                <li>
+                    <Link to='/admin-panel'>Admin Panel</Link>
+                </li>
+            </ul>
         </div>
         <div className='navbar-menu-container'>
             <HiOutlineBars3 onClick={() =>setOpenMenu(true)} />
@@ -78,12 +94,15 @@ function HomeNavbar() {
                             </ListItemButton>
                         </ListItem>
                     ))}
-                </List>
-                
+                </List>   
             </Box>
         </Drawer>
+
+
+
+
     </nav>
   )
 }
 
-export default HomeNavbar
+export default Navbar
