@@ -15,3 +15,20 @@ class User(db.Model):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
     def __repr__(self):
         return f'<User {self.email}>'
+    
+class ParkingSpot(db.Model):
+    __tablename__ = 'parking spots'
+
+    id = db.Column(db.Integer, primary_key=True)
+    location = db.Column(db.String)
+    latitude = db.Column(db.Float)
+    longitude = db.Column(db.Float)
+    type = db.Column(db.String, nullable=False)
+    capacity = db.Column(db.String, nullable=False)
+    pricing = db.Column(db.String, nullable=False)
+    restrictions = db.Column(db.String)
+
+    def __repr__(self):
+        return f"<ParkingSpot(id={self.id}, location={self.location}, type={self.type}, capacity={self.capacity}, pricing={self.pricing}, restrictions={self.restrictions})>"
+    
+    

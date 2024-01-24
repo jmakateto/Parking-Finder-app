@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
+
 from flask import Flask, make_response,jsonify,request
 from flask_migrate import Migrate
 from models import db, User
 import jwt
 
 JWT_SECRET = 'secret'
-
-
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
@@ -63,3 +62,4 @@ def login():
 
     token = jwt.encode({'user_id': user.id}, JWT_SECRET, algorithm='HS256')
     return make_response(jsonify({"msg": "Login successful", "token": token}), 200)
+
