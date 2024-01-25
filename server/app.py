@@ -4,6 +4,7 @@ from flask import Flask, make_response,jsonify,request
 from flask_migrate import Migrate
 from models import db, User
 import jwt
+from utils.mail import Mail
 
 JWT_SECRET = 'secret'
 
@@ -22,20 +23,25 @@ def signup():
     
     required_fields = ['firstname', 'surname', 'email', 'password']
     if not all(field in request.json for field in required_fields):
-        return make_response(jsonify({"msg": "Missing required JSON data in request"}), 400)
+        return make_response(jsonify({"msg": F"{required_fields}"}))
 
     firstname = request.json['firstname']
     surname = request.json['surname']
     email = request.json['email']
     password = request.json['password']
 
-    if not all([firstname, surname, email, password]):
-        return make_response(jsonify({"msg": "Missing required data in request"}), 400)
-
     if User.query.filter_by(email=email).first():
         return make_response(jsonify({"msg": "User already exists"}), 400)
+    
+
 
     user = User(firstname=firstname, surname=surname, email=email, password=password)
+
+    mail = Mail()
+    mail.send_email(
+        email, 'Welcome to Parking Finder', 
+        'You have successfully signed up for Parking Finder. Please login to your account and enjoy our services.'
+        )
     db.session.add(user)
     db.session.commit()
 
