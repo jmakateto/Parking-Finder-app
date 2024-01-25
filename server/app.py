@@ -4,7 +4,10 @@ from flask import Flask, make_response,jsonify,request
 from flask_migrate import Migrate
 from models import db, User
 import jwt
+from utils.sms import SMS
 from utils.mail import Mail
+import random
+import math
 
 JWT_SECRET = 'secret'
 
@@ -29,19 +32,22 @@ def signup():
     surname = request.json['surname']
     email = request.json['email']
     password = request.json['password']
+    phone = request.json.get('phone')
+
+    if phone is None:
+        return make_response(jsonify({"msg": "Phone number is required"}), 400)
+
+
 
     if User.query.filter_by(email=email).first():
         return make_response(jsonify({"msg": "User already exists"}), 400)
     
-
+    otp = math.floor(100000 + random.random() * 900000)
 
     user = User(firstname=firstname, surname=surname, email=email, password=password)
 
-    mail = Mail()
-    mail.send_email(
-        email, 'Welcome to Parking Finder', 
-        'You have successfully signed up for Parking Finder. Please login to your account and enjoy our services.'
-        )
+    sms = SMS()
+    sms.send_sms(phone, otp)
     db.session.add(user)
     db.session.commit()
 
