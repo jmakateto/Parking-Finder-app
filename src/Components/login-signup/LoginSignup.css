@@ -26,7 +26,7 @@
 .underline{
     width: 61px;
     height: 6px;
-    background: #FFE382;
+    background: #FF004D;
     border-radius: 9px;
 }
 
@@ -43,7 +43,7 @@
     margin: auto;
     width: 480px;
     height: 80px;
-    background: #FFE382;
+    background: #FAD2CF;
     border-radius: 6px;
 }
 
@@ -57,7 +57,7 @@
     background: transparent;
     border: none;
     outline: none;
-    color: #FFE382;
+    color: #FF004D;
     font-size: 19px;
     font-style: oblique;
 }
